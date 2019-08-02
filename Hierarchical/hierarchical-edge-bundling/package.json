@@ -1,0 +1,14 @@
+{
+  "name": "@mbostock/hierarchical-edge-bundling",
+  "main": "@d3/hierarchical-edge-bundling.js",
+  "version": "243.0.0",
+  "homepage": "https://observablehq.com/@mbostock/hierarchical-edge-bundling",
+  "author": {
+    "name": "Mike Bostock",
+    "url": "https://observablehq.com/@mbostock"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}

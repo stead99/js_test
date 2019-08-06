@@ -13,17 +13,43 @@
 
 <body>
 <script>
+var w = 600
+var h = 250
 var rowConverter = function(d){
     return {
-        data: new Data(+d.year, (+d.month - 1)),
+        date: new Date(+d.year, (+d.month - 1)),
         average: parseFloat(d.average)
-    }
+    };
 }
 
-d3.csv("ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt", rowConverter, function(data){
+d3.csv("https://github.com/stead99/js_test/blob/master/path/co2_mm_mlo.csv", rowConverter, function(data){
     var dataset = data;
     console.table(dataset, ["date", "average"]);
-})
+
+    xScale = d3.scaleTime()
+           .domain([
+           d3.min(dataset, function(d){
+               return d.data;
+           })])
+           .range([0, w]);
+
+    yScale = d3.scaleLinear()
+           .domain([0, d3.max(dataset, function(d){
+               return d.average;
+           })])
+           .range([h, 0])
+}) 
+
+    
+var line = d3.line()
+                 .x(function(d){
+                     return xScale(d.date);
+                 })
+                 .y(function(d){
+                     return yScale(d.average)
+                 });
+
+
 </script>
 </body>
 <html>

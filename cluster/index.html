@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.node{
+				fill:white;    /*白色填充*/
+				stroke:red;		/*红色边界*/
+				stroke-width: 1px;
+			}
+			text{
+				font-size: 10px;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+			}
+			.link{
+				fill:none;      /*这句很关键，要不曲线会很丑*/   
+			}
+		</style>
+	</head>
+	<body>
+		<svg></svg>
+		<script type="text/javascript">
+			var width=200;                      
+			var height =200;     
+			var svg = d3.select("svg");
+				svg.attr("width",1000)
+					.attr("height",1000)
+					.attr("x",100)
+					.attr("y",100);
+			var cluster = d3.cluster()		  //默认生成的树形结构是竖直方向
+							.size([width,height]);        //这里要设置合理，控制展现区域的宽高
+			
+			var diagonal = d3.svg.diagonal()       //对角线生成器   将线条进行处理 需要和path绑定
+    						.projection(function(d) { return [d.y+100, d.x]; });
+			d3.json("/Users/stead/JS_data/source_tree/project_code/java_script/D3/test/cluster/city.json", function(error,root){
+					var	 nodes = cluster.nodes(root);  //生成节点
+					var	 links = cluster.links(nodes);	//生成连线
+					console.log(links); 
+					/*画线线*/
+					var link = svg.selectAll(".link")
+								.data(links)
+								.enter()
+								.append("path")
+								.attr("class","link")
+								.style("stroke","#ccc")
+								.style("stroke-width",1)
+								.attr("d",diagonal);   //对数据源进行处理 并画出来
+					/*画圈圈诅咒你*/			
+					var circles = svg.selectAll(".node")
+								  .data(nodes)
+								  .enter()
+								  .append("g")          //要给加class 需要用g
+								  .append("circle")      //给每个g添加circle
+								  .attr("r",4)
+								  .attr("class","node")
+								  .attr("transform",function(d,i){       
+								  	return "translate("+(d.y+100)+","+d.x+")";  //将坐标移动到指定的点并且x,y对调
+								  	});
+						
+					/*写文字*/
+					var texts = svg.selectAll("text")
+									.data(nodes)
+									.enter()
+									.append("text")
+									.style("fill","black")
+									.attr("transform",function(d,i){
+										var temp = d.children?-12:12;//注意这里根据他有没有孩子节点来设置它的方位
+										var y = d.y+temp;
+										return "translate("+(y+100)+","+d.x+")";
+									})
+									.text(function(d,i){
+										return d.name;
+									});
+									
+			});
+		</script>
+	</body>
+</html>

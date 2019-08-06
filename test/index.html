@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.pumpkin{
+    fill: yellow;
+    stroke: orange;
+    stroke-width: 20;
+}
+</style>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<svg width="500" height="500">
+<circle cx="250" cy="250" r="220" class="pumpkin">
+</svg>
+<svg width="500" height="500">
+<circle cx="100" cy="250" r="50" fill="rgba(128, 0, 128, 1.0)"/>
+<circle cx="175" cy="250" r="50" fill="rgba(0, 0, 255, 0.75)"/>
+<circle cx="250" cy="250" r="50" fill="rgba(255, 255, 0, 0.25)"/>
+<circle cx="325" cy="250" r="50" fill="rgba(255, 0, 0, 0.1)"/>
+</svg>
+<svg width="500" height="500">
+<rect x="0" y="0" width="500" height="500" fill="blue" stroke="green" stroke-width="20" >
+</svg>
+<svg width="500" height="500">
+<ellipse cx="250" cy="100" rx="250" ry="100" fill="blue">
+</svg>
+<svg width="500" height="500">
+<line xl="0" yl="0" x2="500" y2="50" stroke="blue">
+</svg>
+<svg width="500" height="500">
+<text x="250" y="250" font-family="serif" font-size="50" fill="blue">Easy-test</text>
+</svg>
+
+<svg width = "500" height = "500">
+<script>
+var dataset = [5, 10, 15, 20, 25]
+d3.select("body")
+.selectAll("p")
+.data(dataset)
+.enter()
+.append("p")
+.text(function(d) {return "I can count up to " + d;})
+.style("color", function(d){
+    if (d > 15){
+        return "red"
+    } else {
+        return "black"
+    }
+});
+</script>
+</svg>
+
+<script>
+var dataset = [5, 10, 15, 20, 25, 30, 35];
+d3.select("body")
+  .selectAll("div")
+  .data(dataset)
+  .enter()
+  .append("div")
+  .attr("class", "bar")
+  .style("height", function(d){
+      return d + "px"
+  });
+</script>
+
+<script>
+var w =500
+var h = 50
+var dataset = [5, 10, 15, 20, 25]
+
+var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h)
+
+var circles = svg.selectAll("circle")
+                 .data(dataset)
+                 .enter()
+                 .append("circle")
+
+circles.attr("cx", function(d, i){
+    return (i*50) + 25;
+})
+       .attr("cy", h/2)
+       .attr("r", function(d){
+            return d;
+            })
+       .attr("fill", "yellow")
+       .attr("stroke", "orange")
+       .attr("stroke-width", function(d){
+           return d/2
+       })
+
+</script>
+
+<script>
+var dataset = [5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15]
+var w = 500
+var h = 500
+var barPadding = 1
+var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+svg.selectAll("rect")
+   .data(dataset)
+   .enter()
+   .append("rect")
+   .attr("x", 0)
+   .attr("y", 0)
+   .attr("width", w/dataset.length - barPadding)
+   .attr("height", function(d){
+       return d*4
+   })
+   .attr("x", function(d, i){
+       return i * (w/dataset.length)
+   })
+   .attr("fill", function(d){
+       return "rgb(0, 0, " + Math.round(d*10) + ")"
+   })
+
+svg.selectAll("text")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .text(function(d){
+       return d
+   })
+   .attr("x", function(d, i){
+       return i*(w/dataset.length) + 10
+   })
+   .attr("y", function(d){
+       return (d*5) - h/20
+   })
+   .attr("fill", "white")
+   .on("mouseover", function(){
+       d3.select(this)
+         .attr("fill", "orange")
+       //this will run whenever *any* bar is clicked
+   })
+</script>
+
+<script>
+var w = 500
+var h = 100
+var padding = 30
+var dataset = [
+[5, 20],
+[480, 90],
+[250, 50],
+[100, 33],
+[330, 95],
+[410, 12],
+[475, 44],
+[25, 67],
+[85, 21],
+[220, 88]
+]
+var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h)
+
+var xScale = d3.scaleLinear()
+               .domain([0, d3.max(dataset, function(d){
+                   return d[0];
+               })])
+               .range([0, w])
+
+var yScale = d3.scaleLinear()
+               .domain([0, d3.max(dataset, function(d){
+                   return d[1];
+               })])
+               .range([0, h])
+
+var rScale = d3.scaleLinear()
+               .domain([0, d3.max(dataset, function(d){
+                   return d[1];
+               })])
+               .range([2, 5])
+
+var xAxis = d3.axisBottom()
+              .scale(xScale)
+
+var yAxis = d3.axisLeft()
+              .scale(xScale)
+              .ticks(5)
+
+svg.selectAll("circle")
+   .data(dataset)
+   .enter()
+   .append("circle")
+   .attr("cx", function(d){
+       return xScale(d[0])
+   })
+   .attr("cy", function(d){
+       return yScale(d[1])
+   })
+   .attr("r", function(d){
+       return rScale(d[1]);
+   });
+
+svg.selectAll("text")
+   .data(dataset)
+   .enter()
+   .append("text")
+   .text(function(d){
+       return d[0] + "," + d[1]
+   })
+   .attr("x", function(d){
+       return d[0]
+   })
+   .attr("y", function(d){
+       return d[1]
+   })
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "11px")
+   .attr("fill", "red");
+
+svg.append("g")
+   .attr("class", "axis")
+   .attr("transform", "translate(0, " + (h - padding) + ")")
+   .call(xAxis)
+
+svg.append("g")
+   .attr("class", "axis")
+   .attr("transform", "translate(0, " + (h - padding) + ")")
+   .call(yAxis)
+</script>
+
+<script>
+var dataset =[5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25]
+var w = 600
+var h = 250
+var barPadding = 1
+var xScale = d3.scaleBand()
+               .domain(d3.range(
+                   dataset.length
+               ))
+               .range([0, w])
+               .paddingInner(0.05)
+var xScale = d3.scaleBand()
+
+var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h)
+
+svg.selectAll("rect")
+   .data(dataset)
+   .attr("y", function(d){
+       return h - yScale(d);
+   })
+   .attr("height", function(d){
+       return yScale(d)
+   });
+</script>
+</body>
+<html>

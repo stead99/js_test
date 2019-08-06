@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.pumpkin{
+    fill: yellow;
+    stroke: orange;
+    stroke-width: 20;
+}
+</style>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<script>
+var rowConverter = function(d){
+    return {
+        data: new Data(+d.year, (+d.month - 1)),
+        average: parseFloat(d.average)
+    }
+}
+
+d3.csv("ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt", rowConverter, function(data){
+    var dataset = data;
+    console.table(dataset, ["date", "average"]);
+})
+</script>
+</body>
+<html>

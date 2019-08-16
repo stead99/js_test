@@ -1,0 +1,27 @@
+{
+    "name": "Max",
+    "children": [{
+            "name": "Sylvla",
+            "children": [{
+                    "name": "Craig"
+                },
+                {
+                    "name": "Robin"
+                },
+                {
+                    "name": "Anna"
+                }
+            ]
+        },
+        {
+            "name": "David",
+            "children": [{
+                "name": "Jeff",
+                "size": 3534
+            }, {
+                "name": "Buffly",
+                "size": 5731
+            }]
+        }
+    ]
+}

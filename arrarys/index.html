@@ -8,7 +8,31 @@
 <body>
 <script>
 var data1 = [10, 20, 30, 40, 50, 60]
-d3.json()
+d3.json("https://raw.githubusercontent.com/stead99/js_test/master/arrarys/data.json", function(data2){
+    var canvas = d3.select("body")
+                   .append("svg")
+                   .attr("width", 500)
+                   .attr("height", 500);
+
+    canvas.selectAll("rect")
+          .data(data2)
+          .enter()
+          .append("rect")
+          .attr("width", function(d){return d.age*10})
+          .attr("height", 48)
+          .attr("y", function(d, i){return i*50})
+          .attr("fill", "blue")
+    
+    canvas.selectAll("text")
+         .data(data2)
+         .enter()
+         .append("text")
+         .attr("fill", "white")
+         .attr("y", function(d, i){return i*50 + 30})
+         .text(function(d){return d.name})
+    
+    
+})
 </script>
 </body>
 <html>

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <style>
+path.arc {
+  cursor: move;
+  fill: #fff;
+}
 
 .node {
   font: 10px sans-serif;
@@ -20,6 +24,13 @@
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+var w = 740,
+    h = 700,
+    rx = w / 2,
+    ry = h / 2,
+    m0,
+    rotate = 0
+    pi = Math.PI;
 
 var diameter = 960,
     radius = diameter / 2,
@@ -117,16 +128,4 @@ function mousedown() {
   d3.event.preventDefault();
 }
 </script>
-
-<svg>
-<script>
-var line = d3.svg.line()
-    .x(function(d) { return d.x; })
-    .y(function(d) { return d.y; })
-    .interpolate("basis");
-
-g.append("path")
-    .attr("d", line);
-</script>
-</svg>
 </body>

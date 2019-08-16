@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.pumpkin{
+    fill: yellow;
+    stroke: orange;
+    stroke-width: 20;
+}
+</style>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<p>
+this is the first lesson
+</p>
+
+<p>
+this is the second lesson
+</p>
+
+<p>
+this is the third lesson
+</p>
+
+<script>
+var canvas = d3.select("body")
+                  .append("svg")
+                  .attr("width", 500)
+                  .attr("height", 500)
+
+var v1 = d3.selectAll("p")
+console.log(v1)
+
+var bar1 = canvas.selectAll("rect")
+                 .data([20, 40, 60, 80])
+                 .enter()
+                 .append("rect")
+                 .attr("width", function(d){return d*4})
+                 .attr("height", 50)
+                 .attr("y", function(d){return d*5})
+</script>
+</body>
+<html>

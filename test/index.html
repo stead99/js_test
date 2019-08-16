@@ -259,5 +259,43 @@ svg.selectAll("rect")
        return yScale(d)
    });
 </script>
+
+<svg width='500' height='500'>
+<line xl="0" yl="0" x2="50" y2="20" stroke="blue"/>
+</svg>
+
+<script>
+d3.select("body")
+  .append("p")
+  .style("color", "red")
+  .text('this is a test')
+</script>
+
+<script>
+   var canvas = d3.select("body")
+                  .append("svg")
+                  .attr("width", 500)
+                  .attr("height", 500)
+    var circle = canvas.append("circle")
+                       .attr("cx", 250)
+                       .attr("cy", 250)
+                       .attr("r", 50)
+                       .attr("fill", "blue")
+    
+    var rect = canvas.append("rect")
+                       .attr("width", 100)
+                       .attr("height", 50)
+                       .attr("fill", "blue") 
+    
+    var line = canvas.append("line")
+                       .attr("x1", 0)
+                       .attr("x2", 300)
+                       .attr("y1", 100)
+                       .attr("y2", 200)
+                       .attr("stroke", "green")
+                       .attr("stroke-width", 20)
+                       .attr("fill", "blue") ;'l'
+</script>
+
 </body>
 <html>

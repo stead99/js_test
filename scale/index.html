@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.pumpkin{
+    fill: yellow;
+    stroke: orange;
+    stroke-width: 20;
+}
+</style>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+<script>
+var canvas = d3.select("body")
+                  .append("svg")
+                  .attr("width", 500)
+                  .attr("height", 500)
+
+var scalewidth = d3.scaleLinear()
+                  .domain([0, 140])
+                  .range([0, 500])
+
+var color = d3.scaleLinear()
+              .domain([0, 140])
+              .range(["red", "blue"])
+
+var bar1 = canvas.selectAll("rect")
+                 .data([20, 40, 60, 80, 90])
+                 .enter()
+                 .append("rect")
+                 .attr("width", function(d){return scalewidth(d)})
+                 .attr("height", 10)
+                 .attr("fill", function(d){return color(d)})
+                 .attr("y", function(d){return scalewidth(d)})
+</script>
+</body>
+<html>

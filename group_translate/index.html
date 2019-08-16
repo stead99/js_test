@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.xAxis path,
+.xAxis line{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.xAxis text {
+    font-family: sans-serif;
+    font-size: 11px;
+</style>    
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+<script>
+const xScale = d3.scaleLinear()
+                 .domain([0, 100])
+                 .range([0, 500])
+
+const yScale = d3.scaleLinear()
+                 .domain([0, 100])
+                 .range([0, 500])
+
+var xAxis = d3.axisBottom(xScale).ticks(5)
+
+var yAxis = d3.axisLeft(yScale).ticks(6)
+
+var canvas = d3.select("body")
+                  .append("svg")
+                  .attr("width", 500)
+                  .attr("height", 500)
+                  .append("g")
+                  .attr("transform", "translate(40, 40)");
+
+var bar1 = canvas.selectAll("rect")
+                 .data([20, 40, 60, 80])
+                 .enter()
+                 .append("rect")
+                 .attr("width", function(d){return xScale(d)})
+                 .attr("height", 10)
+                 .attr("y", function(d){return yScale(d)});
+
+canvas.append("g")
+      .attr("transform", "translate(0, 430)")
+      .call(xAxis);
+
+canvas.append("g")
+      .call(yAxis);
+          
+</script>
+</body>
+<html>
